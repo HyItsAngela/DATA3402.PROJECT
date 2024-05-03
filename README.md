@@ -2,15 +2,12 @@
 
 # Project Title
 
-* **One Sentence Summary** Ex: This repository holds an attempt to apply LSTMs to Stock Market using data from
-"Get Rich" Kaggle challenge (provide link). 
+* This repository holds an attempt to apply machine learning techniques and models to metastatic cancer diagnosis to predict id patients recieved a cancer diagnosis withing 90 days of screening using data from
+"WiDS Datathon 2024 Challenge #1" Kaggle challenge [(https://www.kaggle.com/competitions/widsdatathon2024-challenge1)]. 
 
 ## Overview
 
-* This section could contain a short paragraph which include the following:
-  * **Definition of the tasks / challenge**  Ex: The task, as defined by the Kaggle challenge is to use a time series of 12 features, sampled daily for 1 month, to predict the next day's price of a stock.
-  * **Your approach** Ex: The approach in this repository formulates the problem as regression task, using deep recurrent neural networks as the model with the full time series of features as input. We compared the performance of 3 different network architectures.
-  * **Summary of the performance achieved** Ex: Our best model was able to predict the next day stock price within 23%, 90% of the time. At the time of writing, the best performance on Kaggle of this metric is 18%.
+* The task, as defined by the Kaggle challenge is to develop a model to predict if patients recieved metatstatic cancer diagnosis within 90 days of screening. This repository approaches this problem as a binary classification task, using 2 different models, Random Forest Classifier and a gradient boost model called, CatBoost. CatBoost was the best model for the task as it was able to predict whether a patient was diagnosed metastatic cancer within 90 days of screening scored at ~81% accuracy. At the time of this writing, the best performance on the Kaggle leaderboards of this metric is 82%.
 
 ## Summary of Workdone
 
@@ -19,15 +16,15 @@ Include only the sections that are relevant an appropriate.
 ### Data
 
 * Data:
-  * Type: For example
-    * Input: medical images (1000x1000 pixel jpegs), CSV file: image filename -> diagnosis
-    * Input: CSV file of features, output: signal/background flag in 1st column.
-  * Size: How much data?
-  * Instances (Train, Test, Validation Split): how many data points? Ex: 1000 patients for training, 200 for testing, none for validation
+  * Type: Binary Classification
+    * Input: CSV file: train.csv, test.csv -> diagnosis
+    * Input: CSV file of features, output: cancer/no cancer flag in 1st column.
+  * Size: Original training and testing datasets together was 16 MB. After cleaning and proper preprocessing both datasets together was about 36 MB.
+  * Instances (Train, Test, Validation Split): 12906 patients for training, 5792 for testing, none for validation
 
 #### Preprocessing / Clean up
 
-* Describe any manipulations you performed to the data.
+* Dropped features that only had one unique values as they lacked predictive power and variability, and dropped redundant features. During visualization and coreelation patient age seemed to be the most trusted feature so missing values were imputed by the average of the age group. The rest of the missing values in other features that were below 2%, the rows were dropped. One-hot encoding and normalization was used on the cleaned data,
 
 #### Data Visualization
 
