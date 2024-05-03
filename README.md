@@ -33,77 +33,62 @@ Show a few visualization of the data and say a few words about what you see.
 ### Problem Formulation
 
 * Define:
-  * Input / Output
+  *Train information about demographics, diagnosis and treatment options, insurance and more with machine learning to provide a better view about aspects that may contribute to health equity.
   * Models
-    * Describe the different models you tried and why.
-  * Loss, Optimizer, other Hyperparameters.
+    * 2 models were used: RandomForest and Catboost. Both are known for their robustness with noisy or not preprocessed well data. CatBoost was the best model according to it's predictive power and accuracy.
+  * No in-depth fine-tuning to the models such as hypyerparameters, feature importance or cross validation were done. 
 
 ### Training
 
 * Describe the training:
-  * How you trained: software and hardware.
-  * How did training take.
-  * Training curves (loss vs epoch for test/train).
-  * How did you decide to stop training.
-  * Any difficulties? How did you resolve them?
+  * Training was done on a Surface Pro 9 using Python on jupyter notebook.
+  * Training did not take long to process, with the longest load time to be approximately 30 seconds.
+  * Looking at the ROC AUC curves and measurements gave substanstial insight into which model was performing better. Other methods of evaluation was a classification report, log loss (a personal evaluation metric that is tuned by CatBoost), and an accuracy score that was imported from scikit-learn.
+  * Training was stopped early because of time constraints but made sure to incorporate a working model with plenty of evaluation metrics for comparison.
+  * Had difficulty with one-hot encoding the categorical columns as it looks like it encoded the numerical columns too. This dataset was used on the RandomForest model so it may skew some features.
 
 ### Performance Comparison
 
-* Clearly define the key performance metric(s).
-* Show/compare results in one table.
+* Key performance metrics used were log loss ( a metric personally tuned from CatBoost), and metrics imported from scikit-learn, classification report, accuracy score, and ROC and AUC.
 * Show one (or few) visualization(s) of results, for example ROC curves.
 
 ### Conclusions
 
-* State any conclusions you can infer from your work. Example: LSTM work better than GRU.
+* CatBoost worked better than RandomForest, however two different preprocessed datasets were used so this may not be a fair comparison. CatBoost could have yeilded better accuracy if time was taken to perform hyper tuning, trianing with important features, and using cross validation techniques, but as seen from it's ~81% accuracy the model did quite well with it's default training techniques and shines through with it's robustness and preprocessing techniques it's known for.
 
 ### Future Work
 
-* What would be the next thing that you would try.
-* What are some other studies that can be done starting from here.
+* For future study, I would definitely like to dive deeper into feature importance and hyper tuning to see what aspects affect not only the model but the diagnosis and treatment of the patients to reall study the healthcare equity.
+* Other studies can dive into the geographical and environmentel pollutants that patients are exposed to as these two group of features seemed to be more correlated to the training as one would think.
 
 ## How to reproduce results
 
-* In this section, provide instructions at least one of the following:
-   * Reproduce your results fully, including training.
-   * Apply this package to other data. For example, how to use the model you trained.
-   * Use this package to perform their own study.
-* Also describe what resources to use for this package, if appropirate. For example, point them to Collab and TPUs.
+* The notebooks are well organized but further explanation, during preprocessing CatBoost uses a dataset that imputed substantial missing values with the average of that same feature (BMI, patient race, payer type) in an age group, other missing values were under 2% of the data, hence the rows being dropped. Redundant or features with only one unique value were dropped as they either crowded the data or didn't provide enough variability to be of proper use. RandomForest used a dataset that was processed even further than the CatBoost dataset as the data has been normalized and the categorical columns have been one-hot encoded and the original categorical columns have been dropped.
+* As long as a platform that can provide Python code is used such as Collab, Anaconda, etc, is used, results can be replicated.
 
 ### Overview of files in repository
 
-* Describe the directory structure, if any.
-* List all relavent files and describe their role in the package.
-* An example:
-  * utils.py: various functions that are used in cleaning and visualizing data.
-  * preprocess.ipynb: Takes input data in CSV and writes out data frame after cleanup.
-  * visualization.ipynb: Creates various visualizations of the data.
-  * models.py: Contains functions that build the various models.
-  * training-model-1.ipynb: Trains the first model and saves model during training.
-  * training-model-2.ipynb: Trains the second model and saves model during training.
-  * training-model-3.ipynb: Trains the third model and saves model during training.
-  * performance.ipynb: loads multiple trained models and compares results.
-  * inference.ipynb: loads a trained model and applies it to test data to create kaggle submission.
-
-* Note that all of these notebooks should contain enough text for someone to understand what is happening.
+* The repository includes 5 files in total.
+  * Initial Look.py: Introduces the analyst to the data by looking and understanding the features, missing values, and class imbalances
+  * Data Preparation.ipynb: Applies the understaning from Intial Look.ipynb and begins to understand correlations and start cleaning, preprocessing, and visualizing.
+  * Machine.ipynb: Trains, predicts, evaluates, and visualizes the data using machine learning models.
+  * Kaggle Tabular Data.ipynb: Contains the outline for the project.
+  * submission.csv: submission file for the Kaggle challenge that includes the final predictions of the model.
 
 ### Software Setup
-* List all of the required packages.
-* If not standard, provide or point to instruction for installing the packages.
-* Describe how to install your package.
+* Make sure to have pandas, matplotlib, math, scipy.stats, catboost, and scikit-learn packages such as, .preprocessing, .model_selection, .ensemble, and .metrics installed and ready for use.
 
 ### Data
 
-* Point to where they can download the data.
-* Lead them through preprocessing steps, if necessary.
+* Data can be downloaded through the official Kaggle website through the link stated above. Or through Kaggle's API interface.
 
 ### Training
 
-* Describe how to train the model
+* Split the train dataset into a training and test dataset that is otherwise known as the validation set. Initialize the ML model by calling upon the algorithm. ex) "model = RandomForestClassifier()". Predict the validation set using prediction techniques from the ML package. 
 
 #### Performance Evaluation
 
-* Describe how to run the performance evaluation.
+* Evaluation metrics are imported such as the log loss (from CatBoost package), accuracy score, classification score. The ROC curve and AUC measurement were also imported and then placed into a function for comparison of multiple models.
 
 
 ## Citations
