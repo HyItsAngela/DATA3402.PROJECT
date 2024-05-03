@@ -54,6 +54,7 @@ Example distributions of more features
 * Show one (or few) visualization(s) of results, for example ROC curves.
   
   ![Screenshot 2024-05-03 075010](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/d818b562-9c5e-4ef7-9e97-b64c6525bfb1)
+
 ROC curve and AUC measurement comparisons for models, RandomForest and CatBoost. The higher the AUC the better the model, CatBoost has a higher AUC (0.78).
 
 ### Conclusions
