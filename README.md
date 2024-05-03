@@ -9,6 +9,8 @@
 
 * The task, as defined by the Kaggle challenge is to develop a model to predict if patients recieved metatstatic cancer diagnosis within 90 days of screening. This repository approaches this problem as a binary classification task, using 2 different models, Random Forest Classifier and a gradient boost model called, CatBoost. CatBoost was the best model for the task as it was able to predict whether a patient was diagnosed metastatic cancer within 90 days of screening scored at ~81% accuracy. At the time of this writing, the best performance on the Kaggle leaderboards of this metric is 82%.
 
+## Summary of Work Done
+
 ### Data
 
 * Data:
@@ -24,12 +26,15 @@
 
 #### Data Visualization
 ![Screenshot 2024-05-03 112608](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/24c2d6eb-f3b3-4fa7-b1c2-6f965fe4acdf)
-Example distributions for some a couple features
+Zoomed in example distributions for a couple features.
+
+![Screenshot 2024-05-03 113355](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/05641d3c-308a-41a5-bda0-bbac01102c8d)
+Example distributions of more features
+
 
 ### Problem Formulation
 
-* Define:
-  *Train information about demographics, diagnosis and treatment options, insurance and more with machine learning to provide a better view about aspects that may contribute to health equity.
+* Train information about demographics, diagnosis and treatment options, insurance and more with machine learning to provide a better view about aspects that may contribute to health equity.
   * Models
     * 2 models were used: RandomForest and Catboost. Both are known for their robustness with noisy or not preprocessed well data. CatBoost was the best model according to it's predictive power and accuracy.
   * No in-depth fine-tuning to the models such as hypyerparameters, feature importance or cross validation were done. 
