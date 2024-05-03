@@ -9,10 +9,6 @@
 
 * The task, as defined by the Kaggle challenge is to develop a model to predict if patients recieved metatstatic cancer diagnosis within 90 days of screening. This repository approaches this problem as a binary classification task, using 2 different models, Random Forest Classifier and a gradient boost model called, CatBoost. CatBoost was the best model for the task as it was able to predict whether a patient was diagnosed metastatic cancer within 90 days of screening scored at ~81% accuracy. At the time of this writing, the best performance on the Kaggle leaderboards of this metric is 82%.
 
-## Summary of Workdone
-
-Include only the sections that are relevant an appropriate.
-
 ### Data
 
 * Data:
@@ -27,10 +23,8 @@ Include only the sections that are relevant an appropriate.
 * Dropped features that only had one unique values as they lacked predictive power and variability, and dropped redundant features. During visualization and coreelation patient age seemed to be the most trusted feature so missing values were imputed by the average of the age group. The rest of the missing values in other features that were below 2%, the rows were dropped. One-hot encoding and normalization was used on the cleaned data,
 
 #### Data Visualization
-
-![Screenshot 2024-05-03 075010](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/d818b562-9c5e-4ef7-9e97-b64c6525bfb1)
-ROC curve and AUC measurement comparisons for models, RandomForest and CatBoost. The higher the AUC the better the model, CatBoost has a higher AUC (0.78).
-
+![Screenshot 2024-05-03 112608](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/24c2d6eb-f3b3-4fa7-b1c2-6f965fe4acdf)
+Example distributions for some a couple features
 
 ### Problem Formulation
 
@@ -53,6 +47,9 @@ ROC curve and AUC measurement comparisons for models, RandomForest and CatBoost.
 
 * Key performance metrics used were log loss ( a metric personally tuned from CatBoost), and metrics imported from scikit-learn, classification report, accuracy score, and ROC and AUC.
 * Show one (or few) visualization(s) of results, for example ROC curves.
+  
+  ![Screenshot 2024-05-03 075010](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/d818b562-9c5e-4ef7-9e97-b64c6525bfb1)
+ROC curve and AUC measurement comparisons for models, RandomForest and CatBoost. The higher the AUC the better the model, CatBoost has a higher AUC (0.78).
 
 ### Conclusions
 
