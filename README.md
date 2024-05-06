@@ -18,7 +18,7 @@
     * Input: CSV file: train.csv, test.csv; described patient information (eg. age, gender, educational background, etc)
     * Output: sucess or failure based on whether or not pateint received a metastatic cancer daignosis within 90 days of screening -> target col = 'DiagPeriodL90D'
   * Size: Original training and testing datasets together was 16 MB (training: 12,906 rows & 83 features; test: 5792 rows & 82 features). After cleaning and proper preprocessing both datasets together was about 36 MB.
-  * Instances (Train, Test, Validation Split): training: 12906, testing: 5792 validation: ___
+  * Instances (Train, Test, Validation Split): training: 12906, testing: 5792.
 
 #### Preprocessing / Clean up
 
