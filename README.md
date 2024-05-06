@@ -32,12 +32,15 @@
 The following visualizations compare the success/failure for the metastatic cancer diagnosis within 90 days of screening for each feature.
 
 ![Screenshot 2024-05-05 180917](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/4cd99122-7989-451b-b23c-30c2cd80e0b7)
+
 Visual of a select few categorical features. Not all features were visualized to avoid overcrowding.
 
 ![Screenshot 2024-05-05 181137](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/4919c009-0464-4869-8705-a6972fab8d6c)
+
 Zoomed in example distributions for a couple of numerical features.
 
 ![Screenshot 2024-05-03 113355](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/05641d3c-308a-41a5-bda0-bbac01102c8d)
+
 Overview distributions of more numerical features.
 
 ### Problem Formulation
@@ -66,6 +69,7 @@ Overview distributions of more numerical features.
   * auc().
 
 ![Screenshot 2024-05-05 183147](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/20fcdcab-79aa-4536-a5c9-0684119ac479)
+
 Table of metrics to compare and contrast the evaluations of the models. CatBoost model exhibited 
  
 ![Screenshot 2024-05-05 183044](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/35a89034-6806-431e-b588-992c2c167ae3)
