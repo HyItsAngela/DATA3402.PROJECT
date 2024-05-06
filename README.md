@@ -7,7 +7,7 @@
 
 ## Overview
 
-* The task, as defined by the Kaggle challenge is to develop a model to predict if patients recieved metatstatic cancer diagnosis within 90 days of screening. This repository approaches this problem as a binary classification task, using 2 different models, Random Forest Classifier and a gradient boost model called, CatBoost. CatBoost was the best model for the task as it was able to predict whether a patient was diagnosed metastatic cancer within 90 days of screening scored at ~81% accuracy. At the time of this writing, the best performance on the Kaggle leaderboards of this metric is 82%.
+* The task, as defined by the Kaggle challenge is to develop a model to predict if patients recieved a metatstatic cancer diagnosis within 90 days of screening. This repository approaches this problem as a binary classification task, using 2 different models, Random Forest Classifier and a variant of a gradient boost model called, CatBoost were compared against each other. CatBoost was the best model for the task as it was able to predict whether a patient was diagnosed with metastatic cancer within 90 days of screening scored at ~81% accuracy. At the time of this writing, the best performance on the Kaggle leaderboards of this metric is 82%.
 
 ## Summary of Work Done
 
@@ -15,73 +15,114 @@
 
 * Data:
   * Type: Binary Classification
-    * Input: CSV file: train.csv, test.csv -> diagnosis
-    * Input: CSV file of features, output: cancer/no cancer flag in 1st column.
-  * Size: Original training and testing datasets together was 16 MB. After cleaning and proper preprocessing both datasets together was about 36 MB.
-  * Instances (Train, Test, Validation Split): 12906 patients for training, 5792 for testing, none for validation
+    * Input: CSV file: train.csv, test.csv; described patient information (eg. age, gender, educational background, etc)
+    * Output: sucess or failure based on whether or not pateint received a metastatic cancer daignosis within 90 days of screening -> target col = 'DiagPeriodL90D'
+  * Size: Original training and testing datasets together was 16 MB (training: 12,906 rows & 83 features; test: 5792 rows & 82 features). After cleaning and proper preprocessing both datasets together was about 36 MB.
+  * Instances (Train, Test, Validation Split): training: 12906, testing: 5792 validation: ___
 
 #### Preprocessing / Clean up
 
-* Dropped features that only had one unique values as they lacked predictive power and variability, and dropped redundant features. During visualization and coreelation patient age seemed to be the most trusted feature so missing values were imputed by the average of the age group. The rest of the missing values in other features that were below 2%, the rows were dropped. One-hot encoding and normalization was used on the cleaned data,
+* Dropped features that only had one unique values as they lacked predictive power and variability, and dropped redundant features.
+* During visualization and correlation, patient age seemed to be the most trusted feature so missing values in the features, 'patient_race', 'bmi', and 'payer_type' were imputed by the average of the age group.
+* The rest of the missing values in other features that were below 2%, were imputed with the most frequent value (mode).
+* No feature scaling (standardization or normalization) was done.
+* The data sets were split into two separate versions of the cleaned dataset. One included all of the above imputations and removal of the columns (2) dataset inherited the changes from the 1st dataset but included one-hot encoding. 
 
 #### Data Visualization
-![Screenshot 2024-05-03 112608](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/24c2d6eb-f3b3-4fa7-b1c2-6f965fe4acdf)
-Zoomed in example distributions for a couple features.
+The following visualizations compare the success/failure for the metastatic cancer diagnosis within 90 days of screening for each feature.
+
+![Screenshot 2024-05-05 180917](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/4cd99122-7989-451b-b23c-30c2cd80e0b7)
+Visual of a select few categorical features. Not all features were visualized to avoid overcrowding.
+
+![Screenshot 2024-05-05 181137](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/4919c009-0464-4869-8705-a6972fab8d6c)
+Zoomed in example distributions for a couple of numerical features.
 
 ![Screenshot 2024-05-03 113355](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/05641d3c-308a-41a5-bda0-bbac01102c8d)
-Example distributions of more features
-
+Overview distributions of more numerical features.
 
 ### Problem Formulation
 
 * Train information about demographics, diagnosis and treatment options, insurance and more with machine learning to provide a better view about aspects that may contribute to health equity.
   * Models
-    * 2 models were used: RandomForest and Catboost. Both are known for their robustness with noisy or not preprocessed well data. CatBoost was the best model according to it's predictive power and accuracy.
-  * No in-depth fine-tuning to the models such as hypyerparameters, feature importance or cross validation were done. 
+    * RandomForest; chosen for it's ease and flexibility and hence used as a base model for comparison.
+    * Catboost; chosen for it's built-in methods, predictive power and great results without the need for parameter tuning, and robustness.
+  * No in-depth fine-tuning or optimization to the models such as hypyerparameters, feature importance or cross validation were done. 
 
 ### Training
 
 * Describe the training:
-  * Training was done on a Surface Pro 9 using Python on jupyter notebook.
-  * Training did not take long to process, with the longest load time to be approximately 30 seconds.
-  * Looking at the ROC AUC curves and measurements gave substanstial insight into which model was performing better. Other methods of evaluation was a classification report, log loss (a personal evaluation metric that is tuned by CatBoost), and an accuracy score that was imported from scikit-learn.
-  * Training was stopped early because of time constraints but made sure to incorporate a working model with plenty of evaluation metrics for comparison.
-  * Had difficulty with one-hot encoding the categorical columns as it looks like it encoded the numerical columns too. This dataset was used on the RandomForest model so it may skew some features.
+  * Training was done on a Surface Pro 9 using Python via jupyter notebook.
+  * Training did not take long to process, with the longest training time to be approximately a minute.
+  * Concluded training when results were satisfactory and plenty of evaluation metrics for comparison observed fairly decent results.
 
 ### Performance Comparison
 
-* Key performance metrics used were log loss ( a metric personally tuned from CatBoost), and metrics imported from scikit-learn, classification report, accuracy score, and ROC and AUC.
-* Show one (or few) visualization(s) of results, for example ROC curves.
-  
-  ![Screenshot 2024-05-03 075010](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/d818b562-9c5e-4ef7-9e97-b64c6525bfb1)
+* Key performance metrics were imported from sklearn and consist of:
+  * log_loss().
+  * classification_report().
+  * accuracy_score().
+  * roc_auc_score().
+  * roc_curve().
+  * auc().
 
-ROC curve and AUC measurement comparisons for models, RandomForest and CatBoost. The higher the AUC the better the model, CatBoost has a higher AUC (0.78).
+![Screenshot 2024-05-05 183147](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/20fcdcab-79aa-4536-a5c9-0684119ac479)
+Table of metrics to compare and contrast the evaluations of the models. CatBoost model exhibited 
+ 
+![Screenshot 2024-05-05 183044](https://github.com/HyItsAngela/DATA3402.PROJECT/assets/143844332/35a89034-6806-431e-b588-992c2c167ae3)
+
+ROC curve and AUC measurement comparisons for models, RandomForest and CatBoost. The higher the AUC the better the model, CatBoost has a higher AUC (0.80).
 
 ### Conclusions
 
-* CatBoost worked better than RandomForest, however two different preprocessed datasets were used so this may not be a fair comparison. CatBoost could have yeilded better accuracy if time was taken to perform hyper tuning, trianing with important features, and using cross validation techniques, but as seen from it's ~81% accuracy the model did quite well with it's default training techniques and shines through with it's robustness and preprocessing techniques it's known for.
+* CatBoost worked better than RandomForest. Both models could have yeilded better accuracy if time was taken to perform hyper tuning, training with important features, and using cross validation techniques, but as seen from it's ~81% accuracy the model did quite well with it's default training techniques and shines through with it's robustness and preprocessing techniques they're known for. 
 
 ### Future Work
 
-* For future study, I would definitely like to dive deeper into feature importance and hyper tuning to see what aspects affect not only the model but the diagnosis and treatment of the patients to reall study the healthcare equity.
-* Other studies can dive into the geographical and environmentel pollutants that patients are exposed to as these two group of features seemed to be more correlated to the training as one would think.
+* For future personal exploration, I would definitely like to dive deeper into feature importance, hypertuning parameters, and cross validation to see what features affect not only the model but the diagnosis and treatment of the patients to really study and understand healthcare equity.
+* Future studies for others can dive into the environmental pollutants, and other features that patients are exposed to, to study correlations and possibly causations with the positive occurrences of cancer screening.
 
 ## How to reproduce results
 
-* The notebooks are well organized but further explanation, during preprocessing CatBoost uses a dataset that imputed substantial missing values with the average of that same feature (BMI, patient race, payer type) in an age group, other missing values were under 2% of the data, hence the rows being dropped. Redundant or features with only one unique value were dropped as they either crowded the data or didn't provide enough variability to be of proper use. RandomForest used a dataset that was processed even further than the CatBoost dataset as the data has been normalized and the categorical columns have been one-hot encoded and the original categorical columns have been dropped.
-* As long as a platform that can provide Python code is used such as Collab, Anaconda, etc, is used, results can be replicated.
+* The notebooks are well organized and include further explanation but for a summary:
+* Download the original data files ('train.csv', 'test.csv') from Kaggle or directly through the current repository along with the processed data files.
+* Install the necessary libraries
+* Run the notebooks attached
+* As long as a platform that can provide Python, such as Collab, Anaconda, etc, is used, results can be replicated.
 
 ### Overview of files in repository
 
-* The repository includes 5 files in total.
+* The repository includes 11 files in total.
   * Initial Look.py: Introduces the analyst to the data by looking and understanding the features, missing values, and class imbalances
   * Data Preparation.ipynb: Applies the understaning from Intial Look.ipynb and begins to understand correlations and start cleaning, preprocessing, and visualizing.
   * Machine.ipynb: Trains, predicts, evaluates, and visualizes the data using machine learning models.
   * Kaggle Tabular Data.ipynb: Contains the outline for the project.
-  * submission.csv: submission file for the Kaggle challenge that includes the final predictions of the model.
+  * submission.csv: Submission file for the Kaggle challenge that includes the final predictions of the model.
+  * cleaned_test_df.csv: Cleaned test dataset that includes dropped columns and imputations of missing values.
+  * cleaned_train_df.csv: Cleaned train dataset that includes dropped columns and imputations of missing values.
+  * prep_test_df.csv: Preprocessed test dataset that inherits changes made from 'cleaned_test_df.csv' but adds one-hot encoding.
+  * prep_train_df.csv: Preprocessed train dataset that inherits changes made from 'cleaned_train_df.csv' but adds one-hot encoding.
+  * training.csv: Official and original training dataset that was provided from Kaggle
+  * test.csv: Official and original test dataset that was provided from Kaggle
+
 
 ### Software Setup
-* Make sure to have pandas, matplotlib, math, scipy.stats, catboost, and scikit-learn packages such as, .preprocessing, .model_selection, .ensemble, and .metrics installed and ready for use.
+* Required Packages:
+  * Numpy
+  * Pandas
+  * Sklearn
+  * Seaborn
+  * Matplotlib.pyplot
+  * Math
+  * Catboost
+  * Scipy
+  * Tabulate
+* Installlation Proccess:
+  * Installed through Linux subsystem for Windows
+  * Installed via Ubuntu
+  * pip3 install numpy
+  * pip3 install pandas
+  * pip3 install -U scikit-learn
+  * pip! install catboost
 
 ### Data
 
@@ -89,16 +130,19 @@ ROC curve and AUC measurement comparisons for models, RandomForest and CatBoost.
 
 ### Training
 
-* Split the train dataset into a training and test dataset that is otherwise known as the validation set. Initialize the ML model by calling upon the algorithm. ex) "model = RandomForestClassifier()". Predict the validation set using prediction techniques from the ML package. 
+* Models can be trained by first splitting the testing dataset into two datasets to be trained and validated. Choose the model you wish to train and fit the data and validation variables. Look below in citations to research official websites to find parameters of the model functions to tune to your liking.
 
 #### Performance Evaluation
 
-* Evaluation metrics are imported such as the log loss (from CatBoost package), accuracy score, classification score. The ROC curve and AUC measurement were also imported and then placed into a function for comparison of multiple models.
+* Evaluation metrics are imported such as the log loss, accuracy score, classification score. The ROC curve and AUC measurement were also imported and then placed into a function for comparison of multiple models.
+* Run the notebooks.
 
 
 ## Citations
 
-* Provide any references.
+* Official CatBoost website; used to learn about the CatBoost model and parameters it has to offer: https://catboost.ai/en/docs/concepts/python-reference_catboostclassifier_eval-metrics
+* Official SciKit-Learn website; used to learn about RandomForest and other potential models: https://scikit-learn.org/stable/supervised_learning.html#supervised-learning
+* Fellow participant in Kaggle challenge; incorporated similar imputation technique for 'patient_race', 'bmi', and 'payer_type': https://www.kaggle.com/code/khueluu/wids2024-acwomen-catboost#3.-Model
 
 
 
